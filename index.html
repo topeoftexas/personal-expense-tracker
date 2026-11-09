@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f7fb" />
+  <title>My Expense Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">â‚¿</span><span>SpendWise</span></a>
+      <p class="nav-label">WORKSPACE</p>
+      <a class="nav-item active" href="#overview">â–¦ <span>Overview</span></a>
+      <a class="nav-item" href="#transactions">â†• <span>Transactions</span></a>
+      <a class="nav-item" href="#budgets">â—· <span>Budgets</span></a>
+      <div class="sidebar-note">
+        <div class="note-icon">âœ¦</div>
+        <strong>Small steps add up.</strong>
+        <p>Keep an eye on your spending and make every dollar count.</p>
+      </div>
+      <div class="sidebar-footer">Your money, made clearer.</div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div><p class="eyebrow" id="todayLabel">PERSONAL FINANCE</p><h1>Expense overview</h1></div>
+        <button class="primary-button" id="openAdd">ï¼‹ Add transaction</button>
+      </header>
+
+      <section class="summary-grid" aria-label="Expense summary">
+        <article class="summary-card balance-card">
+          <div class="card-top"><span>Total balance</span><span class="card-icon">â—ˆ</span></div>
+          <div class="amount" id="balanceAmount">$0.00</div>
+          <p class="card-foot">Income minus expenses</p>
+        </article>
+        <article class="summary-card">
+          <div class="card-top"><span>Income this month</span><span class="card-icon income-icon">â†—</span></div>
+          <div class="amount" id="incomeAmount">$0.00</div>
+          <p class="card-foot">Money received this month</p>
+        </article>
+        <article class="summary-card">
+          <div class="card-top"><span>Expenses this month</span><span class="card-icon expense-icon">â†˜</span></div>
+          <div class="amount" id="expenseAmount">$0.00</div>
+          <p class="card-foot">Money spent this month</p>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel chart-panel">
+          <div class="section-heading"><div><p class="eyebrow">YOUR CASH FLOW</p><h2>Spending by category</h2></div><span class="period-pill">This month</span></div>
+          <div id="categoryChart" class="category-chart"><p class="empty-state">Add an expense to see your spending breakdown.</p></div>
+        </article>
+        <article class="panel budget-panel" id="budgets">
+          <div class="section-heading"><div><p class="eyebrow">STAY ON TRACK</p><h2>Monthly budget</h2></div><button class="text-button" id="editBudget">Edit</button></div>
+          <div class="budget-total"><strong id="budgetSpent">$0</strong><span id="budgetLimit">of $2,000.00</span></div>
+          <div class="progress-track"><div class="progress-fill" id="budgetProgress"></div></div>
+          <p class="budget-caption" id="budgetCaption">You have $2,000.00 left in your budget.</p>
+          <div class="budget-tip"><span>âœ§</span><p>Tip: Add transactions regularly to keep your budget accurate.</p></div>
+        </article>
+      </section>
+
+      <!-- SpendWise Complete Upgrade -->
+<section class="panel upgrade-panel">
+  <div class="section-heading">
+    <div><p class="eyebrow">FINANCIAL INSIGHTS</p><h2>Six-month cash flow</h2></div>
+    <button class="upgrade-btn" id="themeToggle">Toggle dark mode</button>
+  </div>
+  <div id="monthlyChart" class="upgrade-chart"></div>
+  <div class="upgrade-legend">Green: Income &nbsp; | &nbsp; Red: Expenses</div>
+</section>
+<section class="panel upgrade-panel">
+  <div class="section-heading">
+    <div><p class="eyebrow">YOUR DATA</p><h2>Export and backup</h2></div>
+  </div>
+  <div class="upgrade-actions">
+    <button class="upgrade-btn" id="exportCsv">Export CSV</button>
+    <button class="upgrade-btn" id="backupJson">Backup data</button>
+    <button class="upgrade-btn" id="restoreJson">Restore backup</button>
+    <input id="restoreFile" type="file" accept=".json" hidden>
+  </div>
+  <p class="upgrade-hint">Back up your records regularly. Data is stored in this browser.</p>
+</section>
+<section class="panel transactions-panel" id="transactions">
+        <div class="section-heading transaction-heading">
+          <div><p class="eyebrow">YOUR ACTIVITY</p><h2>Recent transactions</h2></div>
+          <div class="table-actions"><input id="searchInput" class="search-input" type="search" placeholder="Search transactionsâ€¦" aria-label="Search transactions" /><select id="filterType" aria-label="Filter transactions"><option value="all">All types</option><option value="expense">Expenses</option><option value="income">Income</option></select></div>
+        </div>
+        <div class="table-wrap">
+          <table><thead><tr><th>DESCRIPTION</th><th>CATEGORY</th><th>DATE</th><th>TYPE</th><th class="align-right">AMOUNT</th><th></th></tr></thead>
+          <tbody id="transactionRows"><tr><td colspan="6" class="empty-state">No transactions yet. Add your first one to get started.</td></tr></tbody></table>
+        </div>
+      </section>
+      <footer class="main-footer">SpendWise Â· Your data stays in this browser.</footer>
+    </main>
+  </div>
+
+  <dialog id="transactionDialog">
+    <form id="transactionForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">RECORD YOUR MONEY</p><h2 id="dialogTitle">Add transaction</h2></div><button type="button" class="close-button" id="closeDialog" aria-label="Close">Ã—</button></div>
+      <label>Description<input id="description" name="description" maxlength="60" placeholder="e.g. Grocery shopping" required /></label>
+      <div class="form-row">
+        <label>Amount ($)<input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required /></label>
+        <label>Type<select id="type" name="type"><option value="expense">Expense</option><option value="income">Income</option></select></label>
+      </div>
+      <div class="form-row">
+        <label>Category<select id="category" name="category"><option>Food</option><option>Housing</option><option>Transport</option><option>Shopping</option><option>Bills</option><option>Health</option><option>Entertainment</option><option>Salary</option><option>Other</option></select></label>
+        <label>Date<input id="date" name="date" type="date" required /></label>
+      </div>
+      <p class="form-error" id="formError" role="alert"></p>
+      <button class="primary-button submit-button" type="submit">Save transaction</button>
+    </form>
+  </dialog>
+
+  <dialog id="budgetDialog">
+    <form id="budgetForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">PLAN AHEAD</p><h2>Monthly budget</h2></div><button type="button" class="close-button" id="closeBudget" aria-label="Close">Ã—</button></div>
+      <label>Budget limit ($)<input id="budgetInput" type="number" min="1" step="0.01" required /></label>
+      <button class="primary-button submit-button" type="submit">Save budget</button>
+    </form>
+  </dialog>
+  <script src="script.js"></script>
+</body>
+</html>
